@@ -1,0 +1,12 @@
+{
+    "configure_zsh_as_default_shell": {
+        "image": "ubuntu",
+        "features": {
+            "utils": {
+                "installZsh": true,
+                "configureZshAsDefaultShell": true
+            }
+        },
+        "remoteUser": "devcontainer"
+    }
+}

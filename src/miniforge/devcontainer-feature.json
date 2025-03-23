@@ -1,0 +1,25 @@
+{
+	"name": "Conda, Mamba (Miniforge)",
+	"id": "miniforge",
+	"version": "2.0.0",
+	"description": "Installs Conda and Mamba package manager and Python3. conda-forge set as the default (and only) channel.",
+	"documentationURL": "https://github.com/molcrafts/features/tree/main/src/miniforge",
+	"options": {
+		"version": {
+			"type": "string",
+			"proposals": [
+				"latest"
+			],
+			"default": "latest",
+			"description": "Select version of Miniforge."
+		}
+	},
+	"installsAfter": [
+		"ghcr.io/devcontainers/features/common-utils"
+	],
+	"containerEnv": {
+		"CONDA_DIR": "/opt/conda",
+		"CONDA_SCRIPT": "/opt/conda/etc/profile.d/conda.sh",
+		"PATH": "/opt/conda/bin:${PATH}"
+	}
+}
