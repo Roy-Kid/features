@@ -15,7 +15,7 @@
 		}
 	},
 	"installsAfter": [
-		"ghcr.io/devcontainers/features/common-utils"
+		"ghcr.io/molcrafts/features/utils:latest"
 	],
 	"containerEnv": {
 		"CONDA_DIR": "/opt/conda",

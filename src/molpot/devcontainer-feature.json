@@ -1,0 +1,40 @@
+{
+    "name": "molpot",
+    "id": "molpot",
+    "version": "1.0.0",
+    "description": "Molpot Dev Container Feature",
+    "dependsOn": {
+      "ghcr.io/molcrafts/features/utils:latest": {},
+      "ghcr.io/molcrafts/features/miniforge:latest": {}
+    },
+    "customizations": {
+      "vscode": {
+          "extensions": [
+              "ms-python.python",
+              "ms-python.black-formatter",
+              "ms-python.isort",
+              "ms-toolsai.tensorboard"
+          ]
+      }
+    },
+    "options": {
+      "enableCuda": {
+        "type":"boolean",
+        "default": false,
+        "description": "if enable cuda support"
+      },
+      "pytorchCudaVersion": {
+        "type": "string",
+        "default": "cu125",
+        "description": "PyTorch CUDA version"
+      },
+      "install": {
+        "type": "boolean",
+        "default": false,
+        "description": "Install molpot"
+      }
+    },
+    "installsAfter": [
+      "ghcr.io/molcrafts/features/utils:latest"
+    ]
+  }

@@ -1,10 +1,19 @@
 {
-    "configure_zsh_as_default_shell": {
+    "test_as_default_shell": {
         "image": "ubuntu",
         "features": {
             "utils": {
                 "installZsh": true,
                 "configureZshAsDefaultShell": true
+            }
+        },
+        "remoteUser": "devcontainer"
+    },
+    "test_install_vim": {
+        "image": "ubuntu",
+        "features": {
+            "utils": {
+                "installVim": true
             }
         },
         "remoteUser": "devcontainer"

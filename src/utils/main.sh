@@ -13,6 +13,8 @@ INSTALL_ZSH="${INSTALLZSH:-"true"}"
 CONFIGURE_ZSH_AS_DEFAULT_SHELL="${CONFIGUREZSHASDEFAULTSHELL:-"false"}"
 INSTALL_OH_MY_ZSH="${INSTALLOHMYZSH:-"true"}"
 INSTALL_OH_MY_ZSH_CONFIG="${INSTALLOHMYZSHCONFIG:-"true"}"
+INSTALL_VIM="${INSTALLVIM:-"false"}"
+INSTALL_BUILD_ESSENTIALS="${INSTALLBUILD_ESSENTIALS:-"false"}"
 UPGRADE_PACKAGES="${UPGRADEPACKAGES:-"true"}"
 USERNAME="${USERNAME:-"automatic"}"
 USER_UID="${USERUID:-"automatic"}"
@@ -565,6 +567,14 @@ if [ "${INSTALL_ZSH}" = "true" ]; then
             chown -R ${USERNAME}:${group_name} "${copy_to_user_files[@]}"
         fi
     fi
+fi
+
+if [ "${INSTALL_VIM}" = "true" ]; then
+    apt-get -y install vim
+fi
+
+if [ "${INSTALL_BUILD_ESSENTIALS}" = "true" ]; then
+    apt-get -y install build-essential
 fi
 
 # *********************************

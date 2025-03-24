@@ -30,6 +30,16 @@
             "default": true,
             "description": "Upgrade OS packages?"
         },
+        "installVim": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install Vim?"
+        },
+        "installBuildEssential": {
+            "type": "boolean",
+            "default": false,
+            "description": "Install build-essential?"
+        },
         "username": {
             "type": "string",
             "proposals": [
