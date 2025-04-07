@@ -25,7 +25,7 @@
       },
       "pytorchCudaVersion": {
         "type": "string",
-        "default": "cu125",
+        "default": "cu126",
         "description": "PyTorch CUDA version"
       },
       "install": {
