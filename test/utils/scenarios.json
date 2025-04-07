@@ -1,5 +1,5 @@
 {
-    "test_as_default_shell": {
+    "test_zsh_as_default_shell": {
         "image": "ubuntu",
         "features": {
             "utils": {
