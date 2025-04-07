@@ -28,22 +28,8 @@ apt-get update -y
 apt-get install -y cmake
 cmake --version
 
-# Add LLVM GPG key and repository
-curl --fail --silent --show-error --location https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
-echo "deb http://apt.llvm.org/$base_tag/ llvm-toolchain-$base_tag-$llvm_version main" >> /etc/apt/sources.list.d/llvm.list
-
-# Update and upgrade system again
-apt-get update --fix-missing && apt-get -y upgrade
-
 # Install clang tools
-apt-get install -y --no-install-recommends \
-    clang-format-${llvm_version} \
-    clang-tidy-${llvm_version} \
-    && rm -rf /var/lib/apt/lists/*
-
-# Create symbolic links for clang tools
-ln -s /usr/bin/clang-format-${llvm_version} /usr/local/bin/clang-format
-ln -s /usr/bin/clang-tidy-${llvm_version} /usr/local/bin/clang-tidy
+apt-get install -y clangd
 
 # install xtensor
 conda install -c conda-forge xtensor xtensor-blas xtl xsimd
