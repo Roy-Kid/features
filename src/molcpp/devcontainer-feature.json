@@ -1,0 +1,23 @@
+{
+    "name": "molcpp",
+    "id": "molcpp",
+    "version": "1.0.0",
+    "description": "Molcpp ",
+    "dependsOn": {
+        "ghcr.io/molcrafts/features/utils:latest": {
+            "configureZshAsDefaultShell": true
+        },
+        "ghcr.io/molcrafts/features/miniforge:latest": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.black-formatter",
+                "ms-python.isort",
+                "llvm-vs-code-extensions.vscode-clangd"
+            ]
+        }
+    },
+    "options": {}
+}

@@ -5,8 +5,11 @@ set -e
 # Optional: Import test library
 source dev-container-features-test-lib
 
-# Definition specific tests
-check "welcome" molpot
+if ! command -v cmake --version &> /dev/null
+then
+    echo "cmake could not be found"
+    exit 1
+fi
 
 # Report result
 reportResults

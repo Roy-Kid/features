@@ -1,0 +1,23 @@
+{
+    "test_clangd": {
+        "image": "ubuntu",
+        "features": {
+            "molcpp": {}
+        },
+        "remoteUser": "devcontainer"
+    },
+    "test_cmake": {
+        "image": "ubuntu",
+        "features": {
+            "molcpp": {}
+        },
+        "remoteUser": "devcontainer"
+    },
+    "test_utils": {
+        "image": "ubuntu",
+        "features": {
+            "molcpp": {}
+        },
+        "remoteUser": "devcontainer"
+    }
+}

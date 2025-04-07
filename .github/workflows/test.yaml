@@ -14,6 +14,8 @@ jobs:
       matrix:
         features:
           - utils
+          - molpot
+          - molcpp
         baseImage:
           - mcr.microsoft.com/devcontainers/base:ubuntu
     steps:
@@ -32,6 +34,8 @@ jobs:
       matrix:
         features:
           - utils
+          - molpot
+          - molcpp
     steps:
       - uses: actions/checkout@v4
 
