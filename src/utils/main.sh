@@ -570,6 +570,7 @@ if [ "${INSTALL_ZSH}" = "true" ]; then
 fi
 
 if [ "${INSTALL_VIM}" = "true" ]; then
+    apt-get -y update
     apt-get -y install vim
 fi
 

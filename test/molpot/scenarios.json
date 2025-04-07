@@ -1,11 +1,2 @@
 {
-    "test_cpu": {
-        "image": "ubuntu",
-        "features": {
-            "molpot": {
-                "enableCuda": false
-            }
-        },
-        "remoteUser": "devcontainer"
-    }
 }
