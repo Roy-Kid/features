@@ -1,9 +1,0 @@
-{
-    "test_utils": {
-        "image": "ubuntu",
-        "features": {
-            "molcpp": {}
-        },
-        "remoteUser": "devcontainer"
-    }
-}
