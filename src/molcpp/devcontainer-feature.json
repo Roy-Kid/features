@@ -2,7 +2,7 @@
     "name": "molcpp",
     "id": "molcpp",
     "version": "1.0.0",
-    "description": "Molcpp ",
+    "description": "Molcpp",
     "dependsOn": {
         "ghcr.io/molcrafts/features/utils:latest": {
             "configureZshAsDefaultShell": true
