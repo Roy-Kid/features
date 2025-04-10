@@ -1,35 +1,40 @@
 #!/bin/bash
 
-set -e
+set -e  # Exit immediately if a command exits with a non-zero status
 
-# Define arguments
-base_tag=jammy
+# Load OS release information
+. /etc/os-release
+release=${UBUNTU_CODENAME}
 llvm_version=16
 
-# Install necessary packages
-apt-get install -y --no-install-recommends \
+# Install necessary packages and clean up
+apt-get update -y && apt-get install -y --no-install-recommends \
     gnupg2 \
     gnupg-agent \
     ca-certificates \
+    ninja-build \
+    wget \
     && rm -rf /var/lib/apt/lists/*
 
-# install latest cmake
-apt-get update -y
-apt-get install -y --no-install-recommends \
-    software-properties-common \
-    lsb-release \
-    && rm -rf /var/lib/apt/lists/*
-apt-get clean all
-wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
-apt-add-repository "deb https://apt.kitware.com/ubuntu/ $(lsb_release -cs) main"
-apt-get install kitware-archive-keyring
-rm /etc/apt/trusted.gpg.d/kitware.gpg
-apt-get update -y
-apt-get install -y cmake
-cmake --version
+# Verify ninja installation
+ninja --version
 
-# Install clang tools
-apt-get install -y clangd
+# Add Kitware APT repository for the latest CMake
+wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - > /usr/share/keyrings/kitware-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ ${release} main" > /etc/apt/sources.list.d/kitware.list
+if [ -n "${rc}" ]; then
+  echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ ${release}-rc main" >> /etc/apt/sources.list.d/kitware.list
+fi
 
-# install xtensor
+# Install CMake and clean up
+apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf /var/lib/apt/lists/*
+
+# Install Clang tools
+apt-get update -y && apt-get install -y clangd
+clangd --version
+
+#
+apt-get upgrade
+
+# Install xtensor and related libraries using conda
 conda install -c conda-forge xtensor xtensor-blas xtl xsimd

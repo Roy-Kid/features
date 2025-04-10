@@ -15,7 +15,8 @@
                 "ms-python.python",
                 "ms-python.black-formatter",
                 "ms-python.isort",
-                "llvm-vs-code-extensions.vscode-clangd"
+                "llvm-vs-code-extensions.vscode-clangd",
+                "ms-vscode.cmake-tools"
             ]
         }
     },
