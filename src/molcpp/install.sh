@@ -9,6 +9,9 @@ llvm_version=16
 
 # Install necessary packages and clean up
 apt-get update -y && apt-get install -y --no-install-recommends \
+    lsb-release \
+    software-properties-common \
+    gnupg \
     gnupg2 \
     gnupg-agent \
     ca-certificates \
@@ -29,9 +32,16 @@ fi
 # Install CMake and clean up
 apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf /var/lib/apt/lists/*
 
+# Install latest GCC
+apt-get update -y && apt-get install gcc-14 -y
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 0
+gcc --version
+
 # Install Clang tools
-apt-get update -y && apt-get install -y clangd
-clangd --version
+wget -qO- https://apt.llvm.org/llvm.sh | bash -s -- 20
+clangd-20 --version
+clang++-20 --version
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 0
 
 #
 apt-get upgrade
