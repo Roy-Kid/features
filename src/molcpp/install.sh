@@ -33,6 +33,7 @@ fi
 apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf /var/lib/apt/lists/*
 
 # Install latest GCC
+add-apt-repository universe
 apt-get update -y && apt-get install gcc-14 -y
 update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 0
 gcc --version
