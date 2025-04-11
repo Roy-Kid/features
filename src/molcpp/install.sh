@@ -5,7 +5,6 @@ set -e  # Exit immediately if a command exits with a non-zero status
 # Load OS release information
 . /etc/os-release
 release=${UBUNTU_CODENAME}
-llvm_version=16
 
 # Install necessary packages and clean up
 apt-get update -y && apt-get install -y --no-install-recommends \
@@ -33,17 +32,18 @@ fi
 apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf /var/lib/apt/lists/*
 
 # Install latest GCC
-add-apt-repository universe
-apt-get update -y && apt-get install gcc-14 -y
-update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 0
-gcc --version
+# add-apt-repository universe
+# apt-get update -y && apt-get install gcc-14 g++-14 -y
+# update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-14 100
+# update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-14 100
+# gcc --version
 
 # Install Clang tools
 wget -qO- https://apt.llvm.org/llvm.sh | bash -s -- 20
 clangd-20 --version
 clang++-20 --version
-update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 0
-
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 90
+update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
 #
 apt-get upgrade
 
