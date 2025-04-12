@@ -2,7 +2,7 @@
     "name": "molpot",
     "id": "molpot",
     "version": "0.0.1",
-    "description": "Molpot Dev Container Feature",
+    "description": "molpot devcontainer feature",
     "dependsOn": {
       "ghcr.io/molcrafts/features/utils:latest": {},
       "ghcr.io/molcrafts/features/miniforge:latest": {}
