@@ -36,6 +36,7 @@ jobs:
           - utils
           - molpot
           - molcpp
+          - molvis
     steps:
       - uses: actions/checkout@v4
 

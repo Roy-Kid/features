@@ -42,10 +42,16 @@ apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf 
 wget -qO- https://apt.llvm.org/llvm.sh | bash -s -- 20
 clangd-20 --version
 clang++-20 --version
-update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 90
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 100
 update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
 #
 apt-get upgrade
 
 # Install xtensor and related libraries using conda
-conda install -c conda-forge xtensor xtensor-blas xtl xsimd
+git clone https://github.com/microsoft/vcpkg.git
+cd vcpkg && ./bootstrap-vcpkg.sh
+for shell_config in ~/.bashrc ~/.zshrc; do
+  echo "VCPKG_ROOT=$(pwd)" >> "$shell_config"
+  echo "PATH=\$PATH:\$VCPKG_ROOT" >> "$shell_config"
+done
+# conda install -c conda-forge xtensor xtensor-blas xtl xsimd xtensor-python
