@@ -1,7 +1,7 @@
 {
     "name": "molcpp",
     "id": "molcpp",
-    "version": "0.0.4",
+    "version": "0.0.1",
     "description": "molcpp devcontainer feature",
     "dependsOn": {
         "ghcr.io/molcrafts/features/utils:latest": {},

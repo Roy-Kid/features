@@ -48,10 +48,24 @@ update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
 apt-get upgrade
 
 # Install xtensor and related libraries using conda
-git clone https://github.com/microsoft/vcpkg.git
-cd vcpkg && ./bootstrap-vcpkg.sh
-for shell_config in ~/.bashrc ~/.zshrc; do
-  echo "VCPKG_ROOT=$(pwd)" >> "$shell_config"
-  echo "PATH=\$PATH:\$VCPKG_ROOT" >> "$shell_config"
-done
+VCPKG_ROOT="${VCPKGROOT:-"/usr/local/vcpkg"}"
+VCPKG_DOWNLOADS="${VCPKGDOWNLOADS:-"/usr/local/vcpkg-downloads"}"
+VCPKG_VERSION="${VCPKGVERSION:-"latest"}"
+
+clone_args=(--depth=1
+    -c core.eol=lf
+    -c core.autocrlf=false
+    -c safe.directory="${VCPKG_ROOT}"
+    -c fsck.zeroPaddedFilemode=ignore
+    -c fetch.fsck.zeroPaddedFilemode=ignore
+    -c receive.fsck.zeroPaddedFilemode=ignore
+    https://github.com/microsoft/vcpkg "${VCPKG_ROOT}")
+
+git clone "${clone_args[@]}"
+"${VCPKG_ROOT}"/bootstrap-vcpkg.sh
+
+echo "export VCPKG_ROOT=${VCPKG_ROOT}" > /etc/profile.d/vcpkg.sh
+echo "export PATH=\$PATH:\$VCPKG_ROOT" >> /etc/profile.d/vcpkg.sh
+chmod +x /etc/profile.d/vcpkg.sh
+
 # conda install -c conda-forge xtensor xtensor-blas xtl xsimd xtensor-python
