@@ -8,6 +8,7 @@ release=${UBUNTU_CODENAME}
 
 # Install necessary packages and clean up
 apt-get update -y && apt-get install -y --no-install-recommends \
+    build-essential \
     lsb-release \
     software-properties-common \
     gnupg \
@@ -18,18 +19,19 @@ apt-get update -y && apt-get install -y --no-install-recommends \
     wget \
     && rm -rf /var/lib/apt/lists/*
 
-# Verify ninja installation
-ninja --version
-
-# Add Kitware APT repository for the latest CMake
+# Install CMake and clean up
 wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - > /usr/share/keyrings/kitware-archive-keyring.gpg
 echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ ${release} main" > /etc/apt/sources.list.d/kitware.list
 if [ -n "${rc}" ]; then
   echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ ${release}-rc main" >> /etc/apt/sources.list.d/kitware.list
 fi
-
-# Install CMake and clean up
 apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf /var/lib/apt/lists/*
+
+# Default GCC 11
+if [ -n "${GCC11}" ]; then
+  sudo apt-get install clangd-12
+
+fi
 
 # Install latest GCC
 # add-apt-repository universe
@@ -39,33 +41,46 @@ apt-get update -y && apt-get install -y kitware-archive-keyring cmake && rm -rf 
 # gcc --version
 
 # Install Clang tools
-wget -qO- https://apt.llvm.org/llvm.sh | bash -s -- 20
-clangd-20 --version
-clang++-20 --version
-update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 100
-update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
-#
-apt-get upgrade
+# wget -qO- https://apt.llvm.org/llvm.sh | bash -s -- 20
+# clangd-20 --version
+# clang++-20 --version
+# update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-20 100
+# update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-20 100
+# apt-get upgrade
 
-# Install xtensor and related libraries using conda
-VCPKG_ROOT="${VCPKGROOT:-"/usr/local/vcpkg"}"
-VCPKG_DOWNLOADS="${VCPKGDOWNLOADS:-"/usr/local/vcpkg-downloads"}"
-VCPKG_VERSION="${VCPKGVERSION:-"latest"}"
+# Install vcpkg
+VCPKG_ROOT="${VCPKGROOT:-/usr/local/vcpkg}"
+VCPKG_DOWNLOADS="${VCPKGDOWNLOADS:-/usr/local/vcpkg-downloads}"
+VCPKG_VERSION="${VCPKGVERSION:-latest}"
 
-clone_args=(--depth=1
-    -c core.eol=lf
-    -c core.autocrlf=false
-    -c safe.directory="${VCPKG_ROOT}"
-    -c fsck.zeroPaddedFilemode=ignore
-    -c fetch.fsck.zeroPaddedFilemode=ignore
-    -c receive.fsck.zeroPaddedFilemode=ignore
-    https://github.com/microsoft/vcpkg "${VCPKG_ROOT}")
+# Clone and bootstrap vcpkg
+if [ ! -d "$VCPKG_ROOT" ]; then
+    echo "[INFO] Cloning vcpkg into $VCPKG_ROOT"
+    git clone --depth=1 https://github.com/microsoft/vcpkg "$VCPKG_ROOT"
+    "$VCPKG_ROOT/bootstrap-vcpkg.sh"
+fi
 
-git clone "${clone_args[@]}"
-"${VCPKG_ROOT}"/bootstrap-vcpkg.sh
+# Fix permissions if needed
+chmod -R g+r+w "$VCPKG_ROOT" "$VCPKG_DOWNLOADS" 2>/dev/null || true
+chown -R $(id -u):$(id -g) "$VCPKG_ROOT" "$VCPKG_DOWNLOADS" 2>/dev/null || true
 
-echo "export VCPKG_ROOT=${VCPKG_ROOT}" > /etc/profile.d/vcpkg.sh
-echo "export PATH=\$PATH:\$VCPKG_ROOT" >> /etc/profile.d/vcpkg.sh
+# Set up environment persistently
+echo "[INFO] Writing environment setup to /etc/profile.d/vcpkg.sh"
+cat <<EOF | tee /etc/profile.d/vcpkg.sh >/dev/null
+export VCPKG_ROOT="$VCPKG_ROOT"
+export PATH="\$VCPKG_ROOT:\$PATH"
+EOF
 chmod +x /etc/profile.d/vcpkg.sh
 
-# conda install -c conda-forge xtensor xtensor-blas xtl xsimd xtensor-python
+# Also export to current shell for immediate use
+export VCPKG_ROOT="$VCPKG_ROOT"
+export PATH="$VCPKG_ROOT:$PATH"
+
+# Confirm success
+echo "[INFO] vcpkg installed to $VCPKG_ROOT"
+vcpkg version || echo "[WARNING] vcpkg not found in PATH"
+# End vcpkg installation
+
+if [ -n "${INSTALLXTENSOR}"]; then
+  conda install -c conda-forge xtensor xtensor-blas xtl xsimd xtensor-python
+fi
