@@ -14,5 +14,16 @@
             ]
         }
     },
-    "options": {}
+    "options": {
+        "defaultCompiler": {
+            "type": "string",
+            "default": "gcc11",
+            "description": "Default C++ compiler to use in the devcontainer."
+        },
+        "installXtensor": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install xtensor and xtensor-blas libraries."
+        }
+    }
 }

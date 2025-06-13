@@ -1,8 +1,10 @@
 {
-    "test_deps": {
+    "test_default": {
         "image": "ubuntu",
         "features": {
-            "utils": {}
+            "molcpp": {
+                "defaultCompiler": "gcc11"
+            }
         },
         "remoteUser": "devcontainer"
     }
