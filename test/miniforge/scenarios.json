@@ -1,0 +1,17 @@
+{
+	"mambaforge": {
+		"image": "debian:stable-slim",
+		"features": {
+			"miniforge": {
+				"variant": "Miniforge3"
+			}
+		}
+	},
+	"mambaforge-existing-conda": {
+		"image": "jupyter/base-notebook",
+		"features":{
+			"miniforge": {}
+		},
+		"containerUser": "root"
+	}
+}

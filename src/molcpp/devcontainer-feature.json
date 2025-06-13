@@ -1,0 +1,29 @@
+{
+    "name": "molcpp",
+    "id": "molcpp",
+    "version": "0.0.1",
+    "description": "molcpp devcontainer feature",
+    "dependsOn": {
+        "ghcr.io/molcrafts/features/utils:latest": {},
+        "ghcr.io/molcrafts/features/miniforge:latest": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cmake-tools"
+            ]
+        }
+    },
+    "options": {
+        "defaultCompiler": {
+            "type": "string",
+            "default": "gcc11",
+            "description": "Default C++ compiler to use in the devcontainer."
+        },
+        "installXtensor": {
+            "type": "boolean",
+            "default": true,
+            "description": "Install xtensor and xtensor-blas libraries."
+        }
+    }
+}
