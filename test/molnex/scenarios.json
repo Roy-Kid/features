@@ -1,0 +1,14 @@
+{
+    "test_defaults": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+        "features": {
+            "molnex": {}
+        }
+    },
+    "test_cuda": {
+        "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+        "features": {
+            "molnex": {}
+        }
+    }
+}

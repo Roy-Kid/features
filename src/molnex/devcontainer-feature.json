@@ -1,0 +1,56 @@
+{
+    "name": "molnex",
+    "id": "molnex",
+    "version": "0.0.1",
+    "description": "A feature for installing PyTorch and molnex with optional CUDA support",
+    "documentationURL": "https://github.com/MolCrafts/features/tree/main/src/molnex",
+    "licenseURL": "https://github.com/MolCrafts/features/blob/main/LICENSE",
+    "dependsOn": {
+      "ghcr.io/molcrafts/features/utils:latest": {},
+      "ghcr.io/molcrafts/features/miniforge:latest": {}
+    },
+    "customizations": {
+      "vscode": {
+          "extensions": [
+              "ms-python.python",
+              "ms-python.black-formatter",
+              "ms-python.isort",
+              "ms-toolsai.tensorboard",
+              "ms-python.pylint"
+          ]
+      }
+    },
+    "options": {
+      "enableCuda": {
+        "type": "boolean",
+        "default": false,
+        "description": "Enable CUDA support for PyTorch installation"
+      },
+      "pytorchCudaVersion": {
+        "type": "string",
+        "default": "cu118",
+        "enum": ["cu118", "cu121", "cu124"],
+        "description": "PyTorch CUDA version (cu118, cu121, cu124)"
+      },
+      "installFromSource": {
+        "type": "boolean",
+        "default": false,
+        "description": "Install molnex from source code repository"
+      },
+      "installFromPypi": {
+        "type": "boolean",
+        "default": false,
+        "description": "Install molnex from PyPI package repository"
+      },
+      "molnexBranch": {
+        "type": "string",
+        "default": "dev",
+        "description": "Git branch to checkout for molnex source installation"
+      },
+      "molnexVersion": {
+        "type": "string",
+        "default": "latest",
+        "description": "Version to install from PyPI (e.g., '1.0.0' or 'latest')"
+      }
+    }
+  }
