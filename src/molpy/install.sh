@@ -5,9 +5,6 @@
 
 set -e
 
-# Import function library
-source /usr/local/bin/common-utils
-
 # Function to install packages with conda
 install_conda_packages() {
     local packages="$1"

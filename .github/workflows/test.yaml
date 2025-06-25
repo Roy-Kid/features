@@ -41,6 +41,7 @@ jobs:
           - molnex
           - molcpp
           - molvis
+          - molpy
     steps:
       - uses: actions/checkout@v4
 
