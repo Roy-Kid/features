@@ -41,6 +41,8 @@ install_pip_packages() {
     fi
 }
 
+install_pip_packages "isort black"
+
 
 # Set up Jupyter Lab extensions if Jupyter is installed
 if [ "$INSTALLJUPYTER" = "true" ]; then
